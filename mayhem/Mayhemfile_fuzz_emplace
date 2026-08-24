@@ -1,0 +1,13 @@
+# Mayhem target: fuzz_emplace — bumpalo's in-place-construction API (Bump::emplace_slice /
+# EmplaceSlice / EmplaceStr: copy_slice/clone_slice/try_*/push/reserve/shrink/write_iter),
+# built by mayhem/build.sh via cargo-fuzz at /mayhem/fuzz_emplace. This is the exact surface
+# where upstream commit 0db6ccb (PR #335) fixed a real OOB write shortly before this port.
+# No local seed corpus is shipped (net-new port) — the server-accumulated testsuite.tar is
+# the only source.
+project: savantenvs/bumpalo
+target: fuzz-emplace
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+cmds:
+  - cmd: /mayhem/fuzz_emplace
+    libfuzzer: true

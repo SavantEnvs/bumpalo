@@ -1,0 +1,11 @@
+# Mayhem target: fuzz_bump — bumpalo's core Bump arena allocator (alloc/alloc_slice/alloc_str/
+# collections::Vec+String growth/reset), built by mayhem/build.sh via cargo-fuzz at
+# /mayhem/fuzz_bump. No local seed corpus is shipped (net-new port; no upstream fuzz/ corpus
+# to inherit) — the server-accumulated testsuite.tar is the only source.
+project: savantenvs/bumpalo
+target: fuzz-bump
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+cmds:
+  - cmd: /mayhem/fuzz_bump
+    libfuzzer: true

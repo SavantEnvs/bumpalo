@@ -1,0 +1,38 @@
+[package]
+name = "bumpalo-mayhem-fuzz"
+version = "0.0.0"
+authors = ["savantenvs mayhem integration"]
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+arbitrary = { version = "1", features = ["derive"] }
+libfuzzer-sys = { version = "0.4", features = ["arbitrary-derive"] }
+bumpalo = { path = "../..", features = ["collections", "boxed"] }
+
+# Prevent this crate from being pulled into any parent workspace.
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "fuzz_bump"
+path = "fuzz_targets/fuzz_bump.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "fuzz_emplace"
+path = "fuzz_targets/fuzz_emplace.rs"
+test = false
+doc = false
+
+[profile.release]
+opt-level = 3
+debug = true
+
+[profile.dev]
+opt-level = 3
+debug = true
